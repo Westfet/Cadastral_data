@@ -1,0 +1,127 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="CssUnknownProperty" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myCustomPropertiesEnabled" value="true" />
+      <option name="myIgnoreVendorSpecificProperties" value="false" />
+      <option name="myCustomPropertiesList">
+        <value>
+          <list size="1">
+            <item index="0" class="java.lang.String" itemvalue="background-img" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="DuplicatedCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <Languages>
+        <language minSize="55" name="Python" />
+      </Languages>
+    </inspection_tool>
+    <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="7">
+            <item index="0" class="java.lang.String" itemvalue="nobr" />
+            <item index="1" class="java.lang.String" itemvalue="noembed" />
+            <item index="2" class="java.lang.String" itemvalue="comment" />
+            <item index="3" class="java.lang.String" itemvalue="noscript" />
+            <item index="4" class="java.lang.String" itemvalue="embed" />
+            <item index="5" class="java.lang.String" itemvalue="script" />
+            <item index="6" class="java.lang.String" itemvalue="li" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="55">
+            <item index="0" class="java.lang.String" itemvalue="django" />
+            <item index="1" class="java.lang.String" itemvalue="pillow" />
+            <item index="2" class="java.lang.String" itemvalue="psycopg2" />
+            <item index="3" class="java.lang.String" itemvalue="djoser" />
+            <item index="4" class="java.lang.String" itemvalue="djangorestframework" />
+            <item index="5" class="java.lang.String" itemvalue="sphinxcontrib-applehelp" />
+            <item index="6" class="java.lang.String" itemvalue="tzlocal" />
+            <item index="7" class="java.lang.String" itemvalue="Babel" />
+            <item index="8" class="java.lang.String" itemvalue="yarg" />
+            <item index="9" class="java.lang.String" itemvalue="mypy" />
+            <item index="10" class="java.lang.String" itemvalue="MarkupSafe" />
+            <item index="11" class="java.lang.String" itemvalue="django-extensions" />
+            <item index="12" class="java.lang.String" itemvalue="snowballstemmer" />
+            <item index="13" class="java.lang.String" itemvalue="django-widget-tweaks" />
+            <item index="14" class="java.lang.String" itemvalue="docopt" />
+            <item index="15" class="java.lang.String" itemvalue="filelock" />
+            <item index="16" class="java.lang.String" itemvalue="Pygments" />
+            <item index="17" class="java.lang.String" itemvalue="certifi" />
+            <item index="18" class="java.lang.String" itemvalue="sphinxcontrib-qthelp" />
+            <item index="19" class="java.lang.String" itemvalue="docutils" />
+            <item index="20" class="java.lang.String" itemvalue="django-apscheduler" />
+            <item index="21" class="java.lang.String" itemvalue="cryptography" />
+            <item index="22" class="java.lang.String" itemvalue="sphinxcontrib-htmlhelp" />
+            <item index="23" class="java.lang.String" itemvalue="click" />
+            <item index="24" class="java.lang.String" itemvalue="APScheduler" />
+            <item index="25" class="java.lang.String" itemvalue="pip-review" />
+            <item index="26" class="java.lang.String" itemvalue="platformdirs" />
+            <item index="27" class="java.lang.String" itemvalue="django-filter" />
+            <item index="28" class="java.lang.String" itemvalue="virtualenv" />
+            <item index="29" class="java.lang.String" itemvalue="charset-normalizer" />
+            <item index="30" class="java.lang.String" itemvalue="distlib" />
+            <item index="31" class="java.lang.String" itemvalue="django-allauth" />
+            <item index="32" class="java.lang.String" itemvalue="django-template-debug" />
+            <item index="33" class="java.lang.String" itemvalue="PyJWT" />
+            <item index="34" class="java.lang.String" itemvalue="pip-tools" />
+            <item index="35" class="java.lang.String" itemvalue="cffi" />
+            <item index="36" class="java.lang.String" itemvalue="mypy-extensions" />
+            <item index="37" class="java.lang.String" itemvalue="django-dump-load-utf8" />
+            <item index="38" class="java.lang.String" itemvalue="Jinja2" />
+            <item index="39" class="java.lang.String" itemvalue="sphinxcontrib-devhelp" />
+            <item index="40" class="java.lang.String" itemvalue="alabaster" />
+            <item index="41" class="java.lang.String" itemvalue="urllib3" />
+            <item index="42" class="java.lang.String" itemvalue="pyproject_hooks" />
+            <item index="43" class="java.lang.String" itemvalue="sphinxcontrib-serializinghtml" />
+            <item index="44" class="java.lang.String" itemvalue="imagesize" />
+            <item index="45" class="java.lang.String" itemvalue="packaging" />
+            <item index="46" class="java.lang.String" itemvalue="pipreqs" />
+            <item index="47" class="java.lang.String" itemvalue="build" />
+            <item index="48" class="java.lang.String" itemvalue="Sphinx" />
+            <item index="49" class="java.lang.String" itemvalue="colorama" />
+            <item index="50" class="java.lang.String" itemvalue="Django" />
+            <item index="51" class="java.lang.String" itemvalue="sphinxcontrib-jsmath" />
+            <item index="52" class="java.lang.String" itemvalue="typing_extensions" />
+            <item index="53" class="java.lang.String" itemvalue="python-decouple" />
+            <item index="54" class="java.lang.String" itemvalue="pytz" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="E713" />
+          <option value="E129" />
+          <option value="E501" />
+          <option value="E116" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N802" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="Telegram_bot.handlers.other.bot_create" />
+          <option value="Telegram_bot.handlers.client.bot_create" />
+          <option value="Telegram_bot.handlers.client.keyboard" />
+          <option value="Telegram_bot.handlers.admin.bot_create" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
