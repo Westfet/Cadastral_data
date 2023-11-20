@@ -46,7 +46,7 @@ with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
         try:
             start_time = time.time()
 
-            area = Area(cad_num, with_proxy=True, use_cache=False)
+            area = Area(cad_num, with_proxy=True, use_cache=False,)
 
             # Получаем тип объекта
             parcel_type = area.attrs.get('parcel_type')

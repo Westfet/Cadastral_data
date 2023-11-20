@@ -1,39 +1,78 @@
-import csv
+import os
 import time
-import json
+import csv
 from rosreestr2coord import Area
+import threading
+from split_txtpy import split_csv_into_microfiles
+from config import db_username, db_host, db_name, db_password
+from sqlalchemy import create_engine, Column, String, Float, JSON
+from sqlalchemy.orm import sessionmaker, declarative_base
 
-main_dict = {}
 
-# Открытие CSV файла для чтения
-csv_file_path = 'test_100.csv'
+def process_microfile(csv_file_path):
+    try:
+        engine = create_engine(f'postgresql://{db_username}:{db_password}@{db_host}/{db_name}')
+        connection = engine.connect()
+        Base = declarative_base()
+        Session = sessionmaker(bind=engine)
+        session = Session()
 
-# Обработка CSV файла
-with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
-    reader = csv.reader(csvfile)
+        class Property(Base):
+            __tablename__ = 'properties'
+            id = Column(String, primary_key=True)
+            address = Column(String)
+            kvartal_cn = Column(String)
+            area_value = Column(Float)
+            center = Column(JSON)
+            # ...
 
-    for row in reader:
-        cad_num = row[0]
-        try:
-            start_time = time.time()
+        Base.metadata.create_all(engine)
 
-            area = Area(cad_num, with_proxy=True, use_cache=False)
+        with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                parcel_type = area.attrs.get('parcel_type')
+                data = {
+                    "address": area.attrs.get('address'),
+                    "kvartal_cn": area.attrs.get('kvartal_cn'),
+                    "area_value": area.attrs.get('area_value'),
+                    "center": area.attrs.get('center')
+                }
+                property_obj = Property(id=cad_data, **data)
+                session.add(property_obj)
 
-            data = {
-                "address": area.attrs.get('address'),
-                "id": cad_num,
-                "kvartal_cn": area.attrs.get('kvartal_cn'),
-                "area_value": area.attrs.get('area_value'),
-                "center": area.attrs.get('center')
-            }
+        session.commit()
+        print(f"Обработан файл: {csv_file_path}")
+        time.sleep(1)  # Пауза на 1 секунду
 
-            elapsed_time = time.time() - start_time
-            main_dict[cad_num] = data
-            print(f"Обработка кадастрового номера {cad_num} заняла {elapsed_time} секунд.")
+    except Exception as e:
+        print(f"Ошибка при обработке файла {csv_file_path}: {e}")
 
-        except Exception as e:
-            print(f"Ошибка при обработке кадастрового номера {cad_num}: {e}")
 
-# Запись словаря в JSON файл
-with open('output_without.json', 'w') as json_file:
-    json.dump(main_dict, json_file, indent=4, ensure_ascii=False)
+def process_microfiles():
+    split_csv_into_microfiles('original.csv', 'microfiles')  # Разделение на микрофайлы по 300 участков
+    folder_name = 'microfiles'
+    files = os.listdir(folder_name)
+
+    for file in files:
+        file_path = f'{folder_name}/{file}'
+        threads = []
+
+        with open(file_path, 'r', encoding='utf-8') as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                thread = threading.Thread(target=process_microfile, args=(file_path,))
+                threads.append(thread)
+                thread.start()
+
+        for thread in threads:
+            thread.join()
+
+        # Загрузка изменений в БД после обработки микрофайла
+        # ...
+
+        time.sleep(1)  # Пауза на 1 секунду
+
+
+if __name__ == "__main__":
+    process_microfiles()
