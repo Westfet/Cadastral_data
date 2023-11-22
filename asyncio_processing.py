@@ -1,4 +1,4 @@
-import threading
+import asyncio
 import time
 import os
 from config import db_username, db_host, db_name, db_password
@@ -35,17 +35,18 @@ class Property(Base):
 Base.metadata.create_all(engine)
 
 start_time = time.time()
+empty_data = []  # Глобальный список для хранения пустых данных
 
-empty_cad_list = []
 
-
-# asyncio
-# создаем асинхронные функции
-#
-def get_data(cad_data):
+async def get_data(cad_data):
+    global empty_data
     try:
         if cad_data:
             area = Area(cad_data, with_proxy=True, use_cache=False)
+            if not area:  # Проверка на пустоту экземпляра класса Area
+                empty_data.append(cad_data)
+
+                return
 
             # Извлекаем нужные атрибуты
             data = {
@@ -64,45 +65,41 @@ def get_data(cad_data):
         print(f"Ошибка при обработке кадастрового номера {cad_data}: {e}")
 
 
-def process_txt_file(txt_file):
-    with open(txt_file, 'r', encoding='utf-8') as txtfile:
-        lines = txtfile.readlines()
+async def process_and_save_txt_file(txt_file):
+    try:
+        with open(txt_file, 'r', encoding='utf-8') as txtfile:
+            lines = [line.strip() for line in txtfile.readlines()]
 
-        # Чистка списка потоков ???
-        threads = []
-        for line in lines:
-            cadastre_numbers = line.strip().split(',')  # Разделение строк по запятой
-            for cadastre_number in cadastre_numbers:
-                thread = threading.Thread(target=get_data, args=(cadastre_number,))
-                threads.append(thread)
-                thread.start()
-
-        for thread in threads:
-            thread.join()
-        print("Файл обработан. Спим")
-        time.sleep(1)
+        coros = [get_data(cad_num) for cad_num in lines]
+        results = await asyncio.gather(*coros)
+        return results
+    except Exception as e:
+        print(f"Ошибка при обработке файла {txt_file}: {e}")
+        return []
 
 
-
-
-
-# split_txt_to_multiple_files('list_example.txt', 'txt_folder')
-
-count = 0
-# Проходим по всем файлам TXT в папке
-txt_files_folder = 'txt_folder'
-for filename in os.listdir(txt_files_folder):
-    count += 1
-    if filename == f'{count}.txt':
+async def process_all_files():
+    results = []
+    txt_files_folder = 'txt_folder'
+    for filename in os.listdir(txt_files_folder):
         file_path = os.path.join(txt_files_folder, filename)
-        process_txt_file(file_path)
+        if filename.endswith('.txt'):
+            file_results = await process_and_save_txt_file(file_path)
+            results.extend(file_results)
+            print('Очередной файл из папки обработан, спим')
+            await asyncio.sleep(1)  # Ждем 1 секунду между обработкой файлов
 
-# Код фиксации изменений в БД
-try:
-    # Фиксация изменений
+    return results
+
+
+async def main():
+    await process_all_files()
     session.commit()
+    process_time = start_time - time.time()
     print("Данные успешно сохранены в БД.")
-except Exception as commit_error:
-    print(f"Ошибка при фиксации изменений: {commit_error}")
+    print(empty_data)
+    print(f'Обработка файла заняла {process_time}')
 
-print(time.time() - start_time)
+
+# Запускаем основной цикл асинхронной программы
+asyncio.run(main())
